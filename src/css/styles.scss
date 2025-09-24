@@ -1,0 +1,172 @@
+// ===== Variables & Mixins (SCSS requirement) =====
+$brand: #2f6df6;
+$ink: #0f172a;
+$muted: #64748b;
+$bg: #0b1020;
+$light: #f8fafc;
+$maxw: 1100px;
+
+@mixin container {
+  width: min(#{$maxw}, 92vw);
+  margin-inline: auto;
+}
+
+@mixin fluid-type($min, $max) {
+  font-size: clamp($min, calc(#{$min} + 1vw), $max);
+}
+
+// ===== Base =====
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: $light;
+  background: $bg;
+}
+
+img, video { max-width: 100%; display: block; }
+
+.container { @include container; }
+
+.stripe { padding: 6rem 0; }
+h1, h2, h3 { margin: 0 0 1rem; }
+p { color: $muted; line-height: 1.7; }
+
+// ===== Header / Navbar (Sticky + Resize) =====
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  backdrop-filter: saturate(110%) blur(6px);
+}
+
+.nav {
+  position: relative;
+  display: grid; grid-template-columns: auto 1fr; align-items: center;
+  gap: 1rem; padding: 1.2rem 1.2rem;
+  transition: padding 0.25s ease;
+  background: rgba(5, 9, 20, 0.75); border-bottom: 1px solid rgba(255,255,255,0.06);
+
+  .logo { font-weight: 800; color: $light; text-decoration: none; @include fluid-type(1.2rem, 1.6rem); }
+
+  .nav-links {
+    justify-self: end; display: flex; gap: 1.2rem; list-style: none; margin: 0; padding: 0;
+    a { color: $light; text-decoration: none; opacity: 0.8; transition: opacity .2s, transform .2s; }
+    a.active { opacity: 1; border-bottom: 2px solid $brand; }
+    a:hover { opacity: 1; transform: translateY(-1px); }
+  }
+
+  &.compact { padding: 0.5rem 1.2rem; }
+}
+
+// Reading progress bar (position indicator)
+.reading-indicator {
+  position: absolute; left: 0; bottom: 0;
+  height: 3px; width: 0%;
+  background: linear-gradient(90deg, $brand, lighten($brand, 15%));
+  transition: width .1s linear;
+}
+
+// ===== Hero (fixed background + vertical centering + animation) =====
+.hero {
+  min-height: 92vh;
+  display: grid; place-items: center;
+  text-align: center;
+  background: radial-gradient(1200px 600px at 70% 20%, rgba(47,109,246,.15), transparent);
+
+  &.has-fixed-bg {
+    background-image: url('../assets/hero.jpg');
+    background-size: cover;
+    background-attachment: fixed; // requirement
+    background-position: center;
+  }
+
+  .hero__content {
+    background: rgba(0, 0, 0, 0.362);
+    padding: 2rem; border: 1px solid rgba(255, 255, 255, 0); border-radius: 16px;
+    animation: fadeInUp .7s ease both;
+  }
+
+  .hero__title { @include fluid-type(2rem, 3rem); font-weight: 800; }
+  .hero__subtitle { @include fluid-type(1rem, 1.2rem); margin-bottom: 1.2rem; color: #d9d2d2; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  padding: .8rem 1.1rem; border-radius: 999px;
+  background: $brand; color: white; text-decoration: none; border: none; cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+  &:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(47,109,246,.3); }
+}
+.btn-outline {
+  background: transparent; border: 1px solid rgba(255,255,255,.25);
+}
+
+// ===== About (multi-column) =====
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+.portrait { border-radius: 16px; border: 1px solid rgba(255,255,255,.1); }
+.badges { display: grid; gap: .5rem; padding: 0; list-style: none;
+  li { background: rgba(255,255,255,.05); padding: .6rem .8rem; border-radius: 10px; }
+  i { margin-right: .5rem; color: $brand; }
+}
+
+// ===== Work (cards + modals) =====
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+.card {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px;
+  padding: 1.2rem; transition: transform .2s ease, border-color .2s;
+  &:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.16); }
+}
+.link-as-btn { background: none; color: $brand; border: 0; padding: .4rem 0; cursor: pointer; }
+
+.modal { position: fixed; inset: 0; display: none; }
+.modal[aria-hidden="false"] { display: block; }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.6); }
+.modal__dialog {
+  position: absolute; inset: 0; margin: auto; width: min(680px, 92vw);
+  background: #0d1328; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 1.2rem;
+  top: 10%; animation: fadeInUp .25s ease both;
+}
+.modal__close { position: absolute; right: .8rem; top: .6rem; font-size: 1.6rem; background: none; color: $light; border: 0; cursor: pointer; }
+
+// ===== Carousel =====
+.carousel { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255,255,255,.1); }
+.caro-track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; transition: transform .35s ease; }
+.caro-slide { position: relative; }
+.caro-slide img { width: 100%; height: auto; display: block; }
+.caro-slide figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: .6rem .9rem; background: linear-gradient(transparent, rgba(0,0,0,.7));
+}
+.caro-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.15); color: $light; padding: .6rem .8rem; border-radius: 50%;
+  cursor: pointer;
+}
+.caro-btn.prev { left: .6rem; }
+.caro-btn.next { right: .6rem; }
+
+// ===== Video =====
+.video video { width: 100%; border-radius: 16px; border: 1px solid rgba(255,255,255,.1); }
+
+// ===== Contact (centered content) =====
+.center { text-align: center; display: grid; place-items: center; gap: .6rem; }
+.social { display: flex; gap: 1rem; font-size: 1.3rem;
+  a { color: $light; opacity: .8; }
+  a:hover { opacity: 1; }
+}
+
+// ===== Footer =====
+.footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,.06); color: $muted; }
+
+// ===== Responsive breakpoints =====
+@media (max-width: 1024px) {
+  .cards { grid-template-columns: 1fr 1fr; }
+  .columns { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .cards { grid-template-columns: 1fr; }
+}

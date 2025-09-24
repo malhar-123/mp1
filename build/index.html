@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Malhar Gudekar · Portfolio</title>
+
+  <!-- Webfont (ok to use) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (allowed as “scalable vector icons through CSS”) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer"/>
+
+  <!--link rel="stylesheet" href="./css/styles.css" /-->
+</head>
+<body>
+
+  <!-- Sticky / Resizing Navbar with Position Indicator -->
+  <header id="top" class="site-header">
+    <nav class="nav" id="navbar">
+      <a class="logo" href="#top">MG</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" data-section="hero">Home</a></li>
+        <li><a href="#about" data-section="about">About</a></li>
+        <li><a href="#work" data-section="work">Work</a></li>
+        <li><a href="#gallery" data-section="gallery">Gallery</a></li>
+        <li><a href="#video" data-section="video">Video</a></li>
+        <li><a href="#contact" data-section="contact">Contact</a></li>
+      </ul>
+      <!-- position indicator bar -->
+      <div class="reading-indicator" id="readingIndicator"></div>
+    </nav>
+  </header>
+
+  <!-- Stripe: Hero (fixed background, vertical centering) -->
+  <section id="hero" class="stripe hero has-fixed-bg" aria-label="Intro">
+    <div class="hero__content">
+      <h1 class="hero__title">Hi, I’m Malhar.</h1>
+      <p class="hero__subtitle">Data · AI · Product. I build secure, human-centered systems.</p>
+      <div class="hero__cta">
+        <a class="btn" href="#work">View Work</a>
+        <button class="btn btn-outline" id="openAboutModal">Quick Bio</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal (About quick bio) -->
+  <div class="modal" id="aboutModal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog" role="document">
+      <button class="modal__close" aria-label="Close" data-close>&times;</button>
+      <h2 id="aboutTitle">About Me (Quick)</h2>
+      <p>I’m a MSIM student at UIUC focused on data engineering, security, and AI-powered products.</p>
+      <p>Recent: Developer Productivity @ Synchrony, CHI Research Assistant (misinfo detection), SeeMe (GenAI art marketplace).</p>
+    </div>
+  </div>
+
+  <!-- Stripe: About (multi-column layout) -->
+  <section id="about" class="stripe about">
+    <div class="container columns">
+      <div class="col">
+        <img class="portrait" src="ad73cc6843d9c4c9dac3.jpg" alt="Portrait of Malhar">
+      </div>
+      <div class="col">
+        <h2>About</h2>
+        <p>I design and ship data/AI features with measurable impact. Interests: trustworthy AI, secure pipelines, clean UX.</p>
+        <ul class="badges">
+          <li><i class="fa-solid fa-shield"></i> BASILISK Security Hub</li>
+          <li><i class="fa-solid fa-database"></i> AWS + Spark + ETL</li>
+          <li><i class="fa-solid fa-wand-magic-sparkles"></i> GenAI UX</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stripe: Work (cards) -->
+  <section id="work" class="stripe work">
+    <div class="container">
+      <h2>Selected Work</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>CHI – Infodemic AI</h3>
+          <p>Kafka → Neo4j → EKS pipeline for real-time health misinfo detection.</p>
+          <button class="link-as-btn" data-open="#details-chi">Details</button>
+        </article>
+        <article class="card">
+          <h3>SeeMe – Collections</h3>
+          <p>Next.js feature set: collections, AI descriptions, Pinecone embeddings.</p>
+          <button class="link-as-btn" data-open="#details-seeme">Details</button>
+        </article>
+        <article class="card">
+          <h3>BASILISK – Security Hub</h3>
+          <p>Hybrid crypto tooling for integrity, auth, and non-repudiation.</p>
+          <button class="link-as-btn" data-open="#details-basilisk">Details</button>
+        </article>
+      </div>
+    </div>
+
+    <!-- Hidden modals per project -->
+    <div class="modal" id="details-chi" aria-hidden="true" role="dialog">
+      <div class="modal__backdrop" data-close></div>
+      <div class="modal__dialog">
+        <button class="modal__close" aria-label="Close" data-close>&times;</button>
+        <h3>CHI – Infodemic AI</h3>
+        <p>NLP models on TikTok vaccine content; GDPR/WHO compliant deployment.</p>
+      </div>
+    </div>
+    <div class="modal" id="details-seeme" aria-hidden="true" role="dialog">
+      <div class="modal__backdrop" data-close></div>
+      <div class="modal__dialog">
+        <button class="modal__close" aria-label="Close" data-close>&times;</button>
+        <h3>SeeMe – Collections</h3>
+        <p>Slug routing, collection covers, server actions, Postgres, Pinecone.</p>
+      </div>
+    </div>
+    <div class="modal" id="details-basilisk" aria-hidden="true" role="dialog">
+      <div class="modal__backdrop" data-close></div>
+      <div class="modal__dialog">
+        <button class="modal__close" aria-label="Close" data-close>&times;</button>
+        <h3>BASILISK – Security Hub</h3>
+        <p>Hybrid cryptography, automated keygen, perf-tuned Python pipelines.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stripe: Gallery (Carousel) -->
+  <section id="gallery" class="stripe gallery">
+    <div class="container">
+      <h2>Gallery</h2>
+      <div class="carousel" aria-roledescription="carousel" aria-label="Project screenshots">
+        <button class="caro-btn prev" aria-label="Previous slide" data-caro-prev><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="caro-track" id="caroTrack">
+          <figure class="caro-slide current" aria-roledescription="slide">
+            <img src="12f302861d0339a1f821.jpg" alt="ETL dashboard">
+            <figcaption>ETL dashboard</figcaption>
+          </figure>
+          <figure class="caro-slide" aria-roledescription="slide">
+            <img src="eaa02c675895ca3b56a5.jpg" alt="Marketplace UI">
+            <figcaption>Marketplace UI</figcaption>
+          </figure>
+          <figure class="caro-slide" aria-roledescription="slide">
+            <img src="2befd7bd1dad66269ece.jpg" alt="Security app">
+            <figcaption>Security app</figcaption>
+          </figure>
+        </div>
+        <button class="caro-btn next" aria-label="Next slide" data-caro-next><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stripe: Video -->
+  <section id="video" class="stripe video">
+    <div class="container">
+      <h2>Demo Video</h2>
+      <video controls preload="metadata" poster="12f302861d0339a1f821.jpg">
+        <source src="9668a976fd6de4763e1b.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Stripe: Contact (centered) -->
+  <section id="contact" class="stripe contact">
+    <div class="container center">
+      <h2>Let’s connect</h2>
+      <p>Reach out for collaborations or opportunities.</p>
+      <div class="social">
+        <a aria-label="GitHub" href="#" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a aria-label="LinkedIn" href="#" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        <a aria-label="Email" href="mailto:you@example.com"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="stripe footer">
+    <div class="container">
+      <small>&copy; <span id="year"></span> Malhar Gudekar</small>
+    </div>
+  </footer>
+
+  <script src="97f91119318d54bdee1b.js" defer></script>
+<script defer src="bundle.js"></script></body>
+</html>
