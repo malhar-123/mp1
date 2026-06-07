@@ -2489,7 +2489,7 @@ function updateHeroScroll() {
   var e = Math.pow(p, 0.78); // Mobile-aware constants
 
   var isMobile = window.innerWidth < 768;
-  var startScale = isMobile ? computedMobileScale || 2.2 : START_SCALE;
+  var startScale = computedMobileScale || (isMobile ? 2.2 : START_SCALE);
   var finalLeft = isMobile ? 20 : FINAL_LEFT;
   var finalBottom = isMobile ? 140 : FINAL_BOTTOM; // Overlay: solid black -> transparent
 
@@ -2552,8 +2552,8 @@ window.addEventListener('scroll', updateHeroScroll, {
 }); // Wait until the name element actually has layout dimensions before applying initial transform
 
 function computeMobileScale() {
-  if (window.innerWidth < 768 && nameFirst && nameFirst.offsetWidth > 0) {
-    computedMobileScale = Math.min(window.innerWidth * 0.88 / nameFirst.offsetWidth, START_SCALE);
+  if (nameFirst && nameFirst.offsetWidth > 0) {
+    computedMobileScale = Math.min(window.innerWidth * 0.92 / nameFirst.offsetWidth, START_SCALE);
   }
 }
 
