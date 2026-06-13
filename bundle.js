@@ -2636,11 +2636,27 @@ function updateHeroScroll() {
           }, 3000);
         }
       } else {
-        // Desktop: open panel with message
+        // Desktop: open panel with message, auto-close after 3s if untouched
         if (!chatWidget.classList.contains('open')) {
           chatWidget.classList.add('open');
           setTimeout(function () {
             addMsg("Psst - yes, you. I know things about Malhar that even his mom doesn't. Ask me anything.", 'bot');
+            var autoCloseTimer = setTimeout(function () {
+              var userHasTyped = chatInput && chatInput.value.trim().length > 0;
+              var userHasSent = chatMessages && chatMessages.querySelectorAll('.chat-msg.user').length > 0;
+
+              if (!userHasTyped && !userHasSent) {
+                chatWidget.classList.remove('open');
+              }
+            }, 3000);
+
+            if (chatInput) {
+              chatInput.addEventListener('input', function () {
+                clearTimeout(autoCloseTimer);
+              }, {
+                once: true
+              });
+            }
           }, 300);
         }
       }
@@ -2843,6 +2859,7 @@ var chatInput = document.getElementById('chat-input');
 var chatSend = document.getElementById('chat-send');
 var chatMessages = document.getElementById('chat-messages');
 var chatFirstMsg = true;
+var chatHistory = [];
 chatSend.addEventListener('click', sendChat);
 chatInput.addEventListener('keydown', function (e) {
   if (e.key === 'Enter') sendChat();
@@ -2895,12 +2912,22 @@ function sendChat() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      message: msg
+      message: msg,
+      history: chatHistory.slice(-8)
     })
   }).then(function (r) {
     return r.json();
   }).then(function (data) {
     typing.remove();
+    chatHistory.push({
+      role: 'user',
+      content: msg
+    });
+    chatHistory.push({
+      role: 'assistant',
+      content: data.response
+    });
+    if (chatHistory.length > 16) chatHistory = chatHistory.slice(-16);
     addMsg(data.response, 'bot');
   })["catch"](function (err) {
     typing.remove();
