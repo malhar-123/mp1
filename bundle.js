@@ -2881,7 +2881,7 @@ chatToggle.addEventListener('click', function () {
 function addMsg(text, type) {
   var div = document.createElement('div');
   div.className = 'chat-msg ' + type;
-  div.innerHTML = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  div.innerHTML = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/&lt;b&gt;(.+?)&lt;\/b&gt;/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
   chatMessages.appendChild(div);
   chatMessages.scrollTop = chatMessages.scrollHeight;
   return div;
